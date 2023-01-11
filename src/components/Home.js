@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Feed from './Feed';
 import styled from 'styled-components';
 
@@ -10,6 +11,10 @@ const StyledNoPostsMessage = styled.span`
 `;
 
 const Home = ({ posts }) => {
+  useEffect(() => {
+    document.title = 'Blog | Home';
+  }, []);
+
   return (
     <main>
       <div className="container">

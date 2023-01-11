@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import notFound from '../images/404.svg';
 import styled from 'styled-components';
@@ -22,6 +23,10 @@ const StyledImage = styled.img`
 `;
 
 const Missing = () => {
+  useEffect(() => {
+    document.title = 'Post not found';
+  }, []);
+
   return (
     <StyledNotFound>
       <StyledErrorTitle>Page not found</StyledErrorTitle>

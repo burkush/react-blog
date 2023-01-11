@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 const StyledMain = styled.main`
@@ -80,6 +81,10 @@ const NewPost = ({
   postBody,
   setPostBody,
 }) => {
+  useEffect(() => {
+    document.title = 'Blog | Create a new post';
+  }, []);
+
   return (
     <StyledMain>
       <div className="container">

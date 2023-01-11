@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import routerImg from '../images/router.svg';
 import styled from 'styled-components';
 
@@ -20,6 +21,10 @@ const StyledImage = styled.img`
 `;
 
 const About = () => {
+  useEffect(() => {
+    document.title = 'Blog | About';
+  }, []);
+
   return (
     <main>
       <div className="container">
