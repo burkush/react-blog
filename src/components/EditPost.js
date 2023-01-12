@@ -106,7 +106,7 @@ const EditPost = ({
     } else {
       document.title = 'Post not found';
     }
-  }, []);
+  });
 
   useEffect(() => {
     if (post) {

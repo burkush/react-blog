@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Nav from './Nav';
+import { FaLaptop, FaMobileAlt, FaTabletAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 
 const StyledHeader = styled.header`
@@ -18,15 +19,34 @@ const StyledContainer = styled.div`
 
 const StyledTitle = styled.h2`
   font-size: 1.8rem;
+  display: flex;
 `;
 
-const Header = ({ title, search, setSearch }) => {
+const StyledIcon = styled.span`
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Header = ({ title, search, setSearch, width }) => {
   return (
     <StyledHeader>
       <div className="container">
         <StyledContainer>
           <Link to="/">
-            <StyledTitle>{title}</StyledTitle>
+            <StyledTitle>
+              <StyledIcon>
+                {width < 768 ? (
+                  <FaMobileAlt />
+                ) : width < 992 ? (
+                  <FaTabletAlt />
+                ) : (
+                  <FaLaptop />
+                )}
+              </StyledIcon>
+              <span>{title}</span>
+            </StyledTitle>
           </Link>
           <Nav search={search} setSearch={setSearch} />
         </StyledContainer>

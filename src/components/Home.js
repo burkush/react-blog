@@ -2,15 +2,17 @@ import { useEffect } from 'react';
 import Feed from './Feed';
 import styled from 'styled-components';
 
-const StyledNoPostsMessage = styled.span`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+const StyledStatusMessage = styled.p`
+  text-align: center;
   color: #555;
 `;
 
-const Home = ({ posts }) => {
+const StyledErrorMessage = styled.p`
+  text-align: center;
+  color: #f23427;
+`;
+
+const Home = ({ posts, fetchError, isLoading }) => {
   useEffect(() => {
     document.title = 'Blog | Home';
   }, []);
@@ -18,11 +20,21 @@ const Home = ({ posts }) => {
   return (
     <main>
       <div className="container">
-        {posts.length ? (
-          <Feed posts={posts} />
-        ) : (
-          <StyledNoPostsMessage>No posts to display</StyledNoPostsMessage>
+        {isLoading && (
+          <div className="loading-container">
+            <div className="dot-flashing"></div>
+          </div>
         )}
+        {!isLoading && fetchError && (
+          <StyledErrorMessage>{fetchError}</StyledErrorMessage>
+        )}
+        {!fetchError &&
+          !isLoading &&
+          (posts.length ? (
+            <Feed posts={posts} />
+          ) : (
+            <StyledStatusMessage>No posts to display</StyledStatusMessage>
+          ))}
       </div>
     </main>
   );

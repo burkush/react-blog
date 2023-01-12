@@ -9,10 +9,15 @@ const StyledLayout = styled.div`
   min-height: 100vh;
 `;
 
-const Layout = ({ search, setSearch }) => {
+const Layout = ({ search, setSearch, width }) => {
   return (
     <StyledLayout>
-      <Header title="My Blog" search={search} setSearch={setSearch} />
+      <Header
+        title="My Blog"
+        search={search}
+        setSearch={setSearch}
+        width={width}
+      />
       <Outlet />
       <Footer />
     </StyledLayout>

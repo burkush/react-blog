@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
-import routerImg from '../images/router.svg';
+import routerImg from '../images/book.svg';
 import styled from 'styled-components';
 
+const StyledTitle = styled.h2`
+  margin-bottom: 30px;
+`;
+
 const StyledText = styled.p`
-  margin-top: 30px;
   line-height: 1.5;
+  margin-bottom: 5px;
 `;
 
 const StyledImage = styled.img`
@@ -28,16 +32,28 @@ const About = () => {
   return (
     <main>
       <div className="container">
-        <h2>About</h2>
+        <StyledTitle>About</StyledTitle>
         <StyledText>
-          React Router is capable of more than just routing users to different
-          components. React Router also has a special way of handling links
-          instead of using anchor tags with an href attribute as you would with
-          HTML. In addition, React Router comes with custom hooks that allow you
-          to access the browser history and pull parameters from URLs to help
-          you deliver dynamic content from your React applications.
+          The artist is the creator of beautiful things. To reveal art and
+          conceal the artist is art’s aim. The critic is he who can translate
+          into another manner or a new material his impression of beautiful
+          things.
         </StyledText>
-        <StyledImage src={routerImg} alt="React Router" />
+        <StyledText>
+          The highest as the lowest form of criticism is a mode of
+          autobiography. Those who find ugly meanings in beautiful things are
+          corrupt without being charming. This is a fault.
+        </StyledText>
+        <StyledText>
+          Those who find beautiful meanings in beautiful things are the
+          cultivated. For these there is hope. They are the elect to whom
+          beautiful things mean only beauty.
+        </StyledText>
+        <StyledText>
+          There is no such thing as a moral or an immoral book. Books are well
+          written, or badly written. That is all.
+        </StyledText>
+        <StyledImage src={routerImg} alt="Open book" />
       </div>
     </main>
   );

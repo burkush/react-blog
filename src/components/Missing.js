@@ -18,7 +18,7 @@ const StyledGoHome = styled.p`
 `;
 
 const StyledImage = styled.img`
-  max-width: 500px;
+  max-width: 350px;
   height: auto;
 `;
 

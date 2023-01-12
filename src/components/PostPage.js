@@ -80,7 +80,7 @@ const PostPage = ({ posts, handleDelete }) => {
     } else {
       document.title = 'Post not found';
     }
-  }, []);
+  });
 
   return (
     <main>
