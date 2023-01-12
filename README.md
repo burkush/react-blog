@@ -1,3 +1,17 @@
+# How to run this app
+
+### To set up a local server, run this command in the terminal:
+
+    npx json-server -p 3500 -w data/db.json
+
+### Then in the separate terminal, you can run the React app by typing:
+
+    npm start
+
+### For these commands to work, you should have [Node.js](https://nodejs.org/en/) installed.
+
+&nbsp;<br>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
