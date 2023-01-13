@@ -20,6 +20,7 @@ const StyledBody = styled.p`
 const StyledToolbar = styled.div`
   margin-bottom: 30px;
   display: flex;
+  justify-content: flex-end;
   gap: 10px 30px;
   flex-wrap: wrap;
 `;
