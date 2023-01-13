@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import DataContext from '../context/DataContext';
 import Feed from './Feed';
 import styled from 'styled-components';
 
@@ -12,7 +13,13 @@ const StyledErrorMessage = styled.p`
   color: #f23427;
 `;
 
-const Home = ({ posts, fetchError, isLoading }) => {
+const Home = () => {
+  const {
+    searchResults: posts,
+    fetchError,
+    isLoading,
+  } = useContext(DataContext);
+
   useEffect(() => {
     document.title = 'Blog | Home';
   }, []);

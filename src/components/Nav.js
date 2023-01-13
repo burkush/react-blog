@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import DataContext from '../context/DataContext';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -59,7 +61,9 @@ const StyledInput = styled.input`
   }
 `;
 
-const Nav = ({ search, setSearch }) => {
+const Nav = () => {
+  const { search, setSearch } = useContext(DataContext);
+
   return (
     <StyledNav>
       <StyledNavList>

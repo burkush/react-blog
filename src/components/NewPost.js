@@ -1,4 +1,8 @@
-import { useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import DataContext from '../context/DataContext';
+import { useNavigate } from 'react-router-dom';
+import api from '../api/posts';
+import format from 'date-fns/format';
 import styled from 'styled-components';
 
 const StyledMain = styled.main`
@@ -74,16 +78,36 @@ const StyledSubmitBtn = styled.button`
   }
 `;
 
-const NewPost = ({
-  handleSubmit,
-  postTitle,
-  setPostTitle,
-  postBody,
-  setPostBody,
-}) => {
+const NewPost = () => {
+  const [postTitle, setPostTitle] = useState('');
+  const [postBody, setPostBody] = useState('');
+
+  const { posts, setPosts } = useContext(DataContext);
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.title = 'Blog | Create a new post';
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
+    const datetime = format(new Date(), 'MMMM dd, yyyy pp');
+    const newPost = { id, title: postTitle, datetime, body: postBody };
+
+    try {
+      const response = await api.post('/posts', newPost);
+      const allPosts = [...posts, response.data];
+      setPosts(allPosts);
+      setPostTitle('');
+      setPostBody('');
+      navigate('/');
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+  };
 
   return (
     <StyledMain>

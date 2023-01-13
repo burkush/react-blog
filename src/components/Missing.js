@@ -24,7 +24,7 @@ const StyledImage = styled.img`
 
 const Missing = () => {
   useEffect(() => {
-    document.title = 'Post not found';
+    document.title = 'Page not found';
   }, []);
 
   return (

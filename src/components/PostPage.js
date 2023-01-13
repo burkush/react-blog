@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useEffect, useContext } from 'react';
+import DataContext from '../context/DataContext';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import api from '../api/posts';
 import styled from 'styled-components';
 
 const StyledTitle = styled.h2`
@@ -71,9 +73,13 @@ const StyledGoHome = styled.p`
   }
 `;
 
-const PostPage = ({ posts, handleDelete }) => {
+const PostPage = () => {
+  const { posts, setPosts } = useContext(DataContext);
+
   const { id } = useParams();
   const post = posts.find((post) => post.id.toString() === id);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (post) {
@@ -82,6 +88,23 @@ const PostPage = ({ posts, handleDelete }) => {
       document.title = 'Post not found';
     }
   });
+
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this post?'
+    );
+
+    if (confirmed) {
+      try {
+        await api.delete(`/posts/${id}`);
+        const postsList = posts.filter((post) => post.id !== id);
+        setPosts(postsList);
+        navigate('/');
+      } catch (err) {
+        console.log(`Error: ${err.message}`);
+      }
+    }
+  };
 
   return (
     <main>

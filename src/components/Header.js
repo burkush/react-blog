@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import Nav from './Nav';
+import useWindowSize from '../hooks/useWindowSize';
 import { FaLaptop, FaMobileAlt, FaTabletAlt } from 'react-icons/fa';
+import Nav from './Nav';
 import styled from 'styled-components';
 
 const StyledHeader = styled.header`
@@ -29,7 +30,9 @@ const StyledIcon = styled.span`
   align-items: center;
 `;
 
-const Header = ({ title, search, setSearch, width }) => {
+const Header = ({ title }) => {
+  const { width } = useWindowSize();
+
   return (
     <StyledHeader>
       <div className="container">
@@ -48,7 +51,7 @@ const Header = ({ title, search, setSearch, width }) => {
               <span>{title}</span>
             </StyledTitle>
           </Link>
-          <Nav search={search} setSearch={setSearch} />
+          <Nav />
         </StyledContainer>
       </div>
     </StyledHeader>
