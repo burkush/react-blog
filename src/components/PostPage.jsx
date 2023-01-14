@@ -1,7 +1,6 @@
-import { useEffect, useContext } from 'react';
-import DataContext from '../context/DataContext';
+import { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import api from '../api/posts';
 import styled from 'styled-components';
 
 const StyledTitle = styled.h2`
@@ -74,10 +73,11 @@ const StyledGoHome = styled.p`
 `;
 
 const PostPage = () => {
-  const { posts, setPosts } = useContext(DataContext);
+  const deletePost = useStoreActions((actions) => actions.deletePost);
+  const getPostById = useStoreState((state) => state.getPostById);
 
   const { id } = useParams();
-  const post = posts.find((post) => post.id.toString() === id);
+  const post = getPostById(id);
 
   const navigate = useNavigate();
 
@@ -89,21 +89,9 @@ const PostPage = () => {
     }
   });
 
-  const handleDelete = async (id) => {
-    const confirmed = window.confirm(
-      'Are you sure you want to delete this post?'
-    );
-
-    if (confirmed) {
-      try {
-        await api.delete(`/posts/${id}`);
-        const postsList = posts.filter((post) => post.id !== id);
-        setPosts(postsList);
-        navigate('/');
-      } catch (err) {
-        console.log(`Error: ${err.message}`);
-      }
-    }
+  const handleDelete = (id) => {
+    deletePost(id);
+    navigate('/');
   };
 
   return (

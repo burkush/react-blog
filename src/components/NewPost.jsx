@@ -1,7 +1,6 @@
-import { useState, useEffect, useContext } from 'react';
-import DataContext from '../context/DataContext';
+import { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import { useNavigate } from 'react-router-dom';
-import api from '../api/posts';
 import format from 'date-fns/format';
 import styled from 'styled-components';
 
@@ -79,10 +78,13 @@ const StyledSubmitBtn = styled.button`
 `;
 
 const NewPost = () => {
-  const [postTitle, setPostTitle] = useState('');
-  const [postBody, setPostBody] = useState('');
+  const posts = useStoreState((state) => state.posts);
+  const postTitle = useStoreState((state) => state.postTitle);
+  const postBody = useStoreState((state) => state.postBody);
 
-  const { posts, setPosts } = useContext(DataContext);
+  const savePost = useStoreActions((actions) => actions.savePost);
+  const setPostTitle = useStoreActions((actions) => actions.setPostTitle);
+  const setPostBody = useStoreActions((actions) => actions.setPostBody);
 
   const navigate = useNavigate();
 
@@ -90,23 +92,14 @@ const NewPost = () => {
     document.title = 'Blog | Create a new post';
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const id = posts.length ? posts[posts.length - 1].id + 1 : 1;
     const datetime = format(new Date(), 'MMMM dd, yyyy pp');
     const newPost = { id, title: postTitle, datetime, body: postBody };
-
-    try {
-      const response = await api.post('/posts', newPost);
-      const allPosts = [...posts, response.data];
-      setPosts(allPosts);
-      setPostTitle('');
-      setPostBody('');
-      navigate('/');
-    } catch (err) {
-      console.log(`Error: ${err.message}`);
-    }
+    savePost(newPost);
+    navigate('/');
   };
 
   return (

@@ -1,11 +1,13 @@
-import { useEffect, useContext } from 'react';
-import DataContext from '../context/DataContext';
+import { useEffect } from 'react';
+import { useStoreState } from 'easy-peasy';
 import Feed from './Feed';
 import styled from 'styled-components';
 
 const StyledStatusMessage = styled.p`
+  font-size: 1.2rem;
   text-align: center;
   color: #555;
+  margin-bottom: 30px;
 `;
 
 const StyledErrorMessage = styled.p`
@@ -13,12 +15,9 @@ const StyledErrorMessage = styled.p`
   color: #f23427;
 `;
 
-const Home = () => {
-  const {
-    searchResults: posts,
-    fetchError,
-    isLoading,
-  } = useContext(DataContext);
+const Home = ({ isLoading, fetchError }) => {
+  const searchResults = useStoreState((state) => state.searchResults);
+  const postCount = useStoreState((state) => state.postCount);
 
   useEffect(() => {
     document.title = 'Blog | Home';
@@ -37,8 +36,13 @@ const Home = () => {
         )}
         {!fetchError &&
           !isLoading &&
-          (posts.length ? (
-            <Feed posts={posts} />
+          (searchResults.length ? (
+            <div>
+              <StyledStatusMessage>
+                {postCount === 1 ? `${postCount} post` : `${postCount} posts`}
+              </StyledStatusMessage>
+              <Feed posts={searchResults} />
+            </div>
           ) : (
             <StyledStatusMessage>No posts to display</StyledStatusMessage>
           ))}

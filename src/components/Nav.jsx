@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import DataContext from '../context/DataContext';
+import { useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -62,7 +62,22 @@ const StyledInput = styled.input`
 `;
 
 const Nav = () => {
-  const { search, setSearch } = useContext(DataContext);
+  const posts = useStoreState((state) => state.posts);
+  const search = useStoreState((state) => state.search);
+  const setSearch = useStoreActions((actions) => actions.setSearch);
+  const setSearchResults = useStoreActions(
+    (actions) => actions.setSearchResults
+  );
+
+  useEffect(() => {
+    const filteredResults = posts.filter(
+      (post) =>
+        post.body.toLowerCase().trim().includes(search.toLowerCase().trim()) ||
+        post.title.toLowerCase().trim().includes(search.toLowerCase().trim())
+    );
+
+    setSearchResults(filteredResults.reverse());
+  }, [posts, search, setSearchResults]);
 
   return (
     <StyledNav>
